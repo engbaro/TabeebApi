@@ -7,6 +7,13 @@ resource "aws_api_gateway_rest_api" "tabeeb_api" {
   }
 }
 
+resource "aws_api_gateway_authorizer" "auth" {
+  name = "tabeeb_authorizer"
+  rest_api_id = aws_api_gateway_rest_api.tabeeb_api.id
+  type = "COGNITO_USER_POOLS"
+  provider_arns = [var.depends_on_cognito[0]]
+}
+
 
 resource "aws_api_gateway_resource" "tabeeb" {
   rest_api_id = aws_api_gateway_rest_api.tabeeb_api.id
@@ -28,7 +35,8 @@ resource "aws_api_gateway_method" "patient_post" {
   rest_api_id = aws_api_gateway_rest_api.tabeeb_api.id
   resource_id = aws_api_gateway_resource.patient.id
   http_method = "POST"
-  authorization = "NONE"
+  authorization = "COGNITO_USER_POOLS"
+  authorizer_id = aws_api_gateway_authorizer.auth.id
 }
 
 resource "aws_api_gateway_integration" "patient_post_lambda_integration" {
@@ -36,7 +44,8 @@ resource "aws_api_gateway_integration" "patient_post_lambda_integration" {
   resource_id = aws_api_gateway_resource.patient.id
   http_method = aws_api_gateway_method.patient_post.http_method
   integration_http_method = "POST"
-  type = "MOCK"
+  type = "AWS"
+  uri = aws_lambda_function.patient_post.invoke_arn
 }
 
 resource "aws_api_gateway_method_response" "patient_post" {
