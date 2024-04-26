@@ -1,0 +1,29 @@
+{
+  "name": "patient",
+  "version": "1.0.0",
+  "description": "CRUD operations for patients on tabeeb app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/engbaro/TabeebApi.git"
+  },
+  "author": "Abrar Al-Obaidi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/engbaro/TabeebApi/issues"
+  },
+  "homepage": "https://github.com/engbaro/TabeebApi#readme",
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.556.0",
+    "@aws-sdk/lib-dynamodb": "^3.556.0",
+    "esm": "^3.2.25",
+    "joi": "^17.12.3",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "mocha": "^10.4.0"
+  }
+}

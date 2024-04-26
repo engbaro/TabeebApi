@@ -2,6 +2,11 @@ provider "aws" {
   region = "us-east-1"
 }
 
+module "dynamo_db" {
+  source = "./modules/DynamoDB"
+
+}
+
 module "cognito" {
   source = "./modules/Cognito"
 
